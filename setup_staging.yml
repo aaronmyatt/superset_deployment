@@ -1,0 +1,9 @@
+
+---
+- hosts: localhost
+  become: true
+  gather_facts: yes
+
+  roles:
+    - sunscrapers.python
+    - andrewrothstein.anaconda

@@ -1,0 +1,39 @@
+
+---
+- hosts: localhost
+
+  tasks:
+    - name: clone Superset git repo
+      git:
+        repo: https://github.com/airbnb/superset.git
+        dest: ~/experiment.superset
+    - name: install Superset system dependencies
+      homebrew:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - pkg-config
+        - libffi
+        - openssl
+    - name: install cryptography with homebrew installed openssl
+      pip:
+        name: cryptography
+        state: present
+        executable: ~/miniconda3/bin/pip
+      environment:
+        LDFLAGS: '-L$(brew --prefix openssl)/lib'
+        CFLAGS: '-I$(brew --prefix openssl)/include'
+    - name: install superset and postgresql database adapter library
+      pip:
+        name: superset psycopg2
+        state: present
+        executable: ~/miniconda3/bin/pip
+
+    - name: run app init commands
+      shell: superset {{ item }}
+      args:
+        chdir: ~/experiment/superset
+      with_items:
+        - db upgrade
+        - load_examples
+        - init

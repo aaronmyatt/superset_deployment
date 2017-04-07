@@ -1,0 +1,13 @@
+
+---
+# https://github.com/geerlingguy/ansible-role-ntp
+- src: geerlingguy.ntp
+    
+# https://github.com/ANXS/postgresql
+- src: ANXS.postgresql
+    
+# https://github.com/sunscrapers/ansible-role-python
+- src: sunscrapers.python
+
+# https://github.com/andrewrothstein/ansible-anaconda
+- src: andrewrothstein.anaconda
